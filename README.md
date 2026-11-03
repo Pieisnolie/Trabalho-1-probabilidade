@@ -1,50 +1,110 @@
-# Máquina Estatística — Trabalho I
+# Máquina Estatística
 
-Simulador acadêmico para Probabilidade e Estatística I (IFES — Campus Serra, 2026/2).
+Simulador acadêmico desenvolvido em Python para o Trabalho I da disciplina de Probabilidade e Estatística I, do curso de Sistemas de Informação do IFES, Campus Serra, período 2026/2.
+
+O programa simula uma máquina de rolos com três posições independentes. O jogador utiliza créditos fictícios e recebe um prêmio quando os três símbolos da linha central são iguais.
 
 ## Requisitos
-- Python 3.10 ou superior
+
+- Python 3.10 ou superior.
 - pandas
-- numpy
-- matplotlib
+- NumPy
+- Matplotlib
 
 ## Instalação
+
+Clone o repositório e acesse a pasta do projeto.
+
+Crie e ative um ambiente virtual:
+
 ```bash
 python -m venv .venv
-# Windows:
-.venv\Scripts\activate
-# Linux/macOS:
-source .venv/bin/activate
+```
 
+**Windows:**
+```bash
+.venv\Scripts\activate
+```
+
+**Linux/macOS:**
+```bash
+source .venv/bin/activate
+```
+
+Instale as dependências:
+
+```bash
 pip install -r requirements.txt
 ```
 
 ## Execução
-Na raiz do projeto:
+
+Na pasta raiz do projeto, execute:
+
 ```bash
 python src/simulador.py
 ```
-O programa exibe uma rodada e executa os cinco experimentos. Os CSVs são gravados em `resultados/` e os gráficos em `graficos/`.
 
-## Testes automatizados
+O programa apresenta uma rodada de exemplo e executa automaticamente os cinco experimentos. Ao finalizar, os arquivos gerados ficam organizados nas pastas `resultados/` e `graficos/`.
+
+O programa também pode ser executado diretamente da pasta raiz, caso o arquivo `simulador.py` esteja localizado nela:
+
 ```bash
-python -m unittest discover -s testes -v
+python simulador.py
 ```
-Os testes verificam pagamentos, desconto da aposta, reprodutibilidade, quantidade de rodadas, símbolos e regra de premiação.
+
+## Experimentos
+
+O simulador executa os seguintes experimentos:
+
+**E1 - Frequências observadas:** realiza 10.000 rodadas com semente 2026 e compara as frequências obtidas com as probabilidades teóricas.
+
+**E2 - Médias acumuladas:** executa três sequências de 10.000 rodadas, utilizando as sementes 10, 2026 e 123456. Compara as médias acumuladas e verifica a reprodução dos dez primeiros resultados com a semente 2026.
+
+**E3 - Participantes com saldo limitado:** simula 100 participantes, cada um com saldo inicial de 100 créditos e limite de 500 rodadas. A sessão termina quando o saldo fica abaixo de 1 crédito ou quando o limite de rodadas é atingido.
+
+**E4 - Probabilidade condicional:** analisa os 9.999 pares consecutivos do E1 para comparar a frequência de prêmios após uma rodada premiada e após uma rodada sem prêmio.
+
+**E5 - Aumento dos prêmios:** compara a tabela de pagamentos original com outra que aumenta todos os prêmios em 10%, utilizando os mesmos resultados do E1.
 
 ## Arquivos de resultados
-- `experimento1_rodadas.csv`: 10.000 rodadas da semente 2026.
-- `experimento1_frequencias.csv` e `experimento1_resumo.csv`: distribuição e estatísticas.
-- `experimento2_medias_acumuladas.csv`: médias nas sementes 10, 2026 e 123456.
-- `experimento2_reproducibilidade.csv`: conferência dos dez primeiros resultados.
-- `experimento3_participantes.csv`, `experimento3_resumo.csv` e `experimento3_trajetorias.csv`: sessões com saldo limitado.
-- `experimento4_condicional.csv`: frequências condicionais.
-- `experimento5_comparacao.csv`: comparação das tabelas de pagamento.
-- `testes_automatizados.txt`: saída registrada dos testes.
+
+Os arquivos CSV são salvos automaticamente na pasta `resultados/`.
+
+| Arquivo | Descrição |
+|---|---|
+| `experimento1_rodadas.csv` | Resultados individuais das 10.000 rodadas do E1. |
+| `experimento1_frequencias.csv` | Probabilidades teóricas, contagens e frequências observadas. |
+| `experimento1_resumo.csv` | Lucro médio, desvio-padrão, RTP e proporção de rodadas premiadas. |
+| `experimento2_medias_acumuladas.csv` | Médias acumuladas das três sequências. |
+| `experimento2_reproducibilidade.csv` | Resultado da conferência dos dez primeiros resultados com a semente 2026. |
+| `experimento3_participantes.csv` | Saldo final, quantidade de rodadas, esgotamento e classificação dos participantes. |
+| `experimento3_resumo.csv` | Resumo estatístico dos participantes. |
+| `experimento3_trajetorias.csv` | Trajetórias dos cinco primeiros participantes. |
+| `experimento4_condicional.csv` | Frequências observadas e probabilidades condicionais. |
+| `experimento5_comparacao.csv` | Comparação dos pagamentos, lucros médios e RTP. |
+
+Os gráficos são salvos automaticamente na pasta `graficos/`.
+
+| Arquivo | Descrição |
+|---|---|
+| `e1_frequencias.png` | Comparação entre probabilidades teóricas e frequências observadas. |
+| `e2_medias_acumuladas.png` | Evolução das médias acumuladas nas três sequências. |
+| `e3_trajetorias.png` | Evolução do saldo dos cinco primeiros participantes. |
+| `e5_rtp.png` | Comparação entre o RTP teórico e observado nas duas tabelas de pagamentos. |
+
+O E4 apresenta seus resultados em tabela, sem gerar um gráfico.
 
 ## Parâmetros principais
-Aposta: 1 crédito. Símbolos: A, B, C, D e E. Pagamentos: 5, 10, 15, 25 e 50 créditos. Sementes: E1 = 2026; E2 = 10, 2026 e 123456; E3 = 42. O gerador é inicializado uma vez por sequência, conforme o enunciado.
 
-## Declaração de uso de IA
-Foi utilizada ferramenta de IA como apoio à organização do código, elaboração inicial do relatório e revisão dos cálculos. 
-
+| Parâmetro | Valor |
+|---|---|
+| Símbolos | A, B, C, D e E |
+| Aposta por rodada | 1 crédito |
+| Prêmios | A = 5, B = 10, C = 15, D = 25 e E = 50 créditos |
+| Rodadas do E1 | 10.000 |
+| Sementes do E1 | 2026 |
+| Sementes do E2 | 10, 2026 e 123456 |
+| Semente do E3 | 42 |
+| Participantes do E3 | 100 |
+| Saldo inicial do E3 | 100 créditos
